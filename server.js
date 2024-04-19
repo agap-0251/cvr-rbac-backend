@@ -3,6 +3,7 @@ const express = require("express")
 const studentRoute = require("./routes/studentRoutes")
 const mentorRoute = require("./routes/mentorRoutes")
 const attendanceRoute = require("./routes/attendanceRoutes")
+const loginRoute = require("./routes/loginRoute")
 const { default: mongoose } = require("mongoose")
 const app = express()
 
@@ -19,11 +20,10 @@ app.use((req,res,next) => {
 app.use("/students",studentRoute)
 app.use("/mentor",mentorRoute)
 app.use("/attendance",attendanceRoute)
+app.use("/auth",loginRoute)
 
 mongoose.connect(uri,{
     dbName: process.env.DATABASE_NAME,
-    useNewUrlParser:true,
-    useUnifiedTopology: true
 })
     .then(() => {
         app.listen(port,() => {

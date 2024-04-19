@@ -1,6 +1,5 @@
 const express = require("express");
 const router = express.Router();
-const Mentor = require("../Models/Mentor.model.js");
 const {getAllMentors,addNewMentor,getMentor,updateMentor,deleteMentor} = require('../controllers/mentorController.js')
 
 //get all mentor details

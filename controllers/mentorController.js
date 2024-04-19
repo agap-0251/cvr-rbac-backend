@@ -1,5 +1,5 @@
-const {default : mongoose} = require('mongoose')
-const Mentor = require("../Models/Mentor.model.js");
+const Mentor = require("../models/MentorModel");
+const User = require('../models/UserModel');
 
 //get all mentor details
 const getAllMentors = async (req, res, next) => {
@@ -18,12 +18,13 @@ const getAllMentors = async (req, res, next) => {
 //create new mentor
 const addNewMentor = async (req, res) => {
   try {
-    const ment = new Mentor(req.body);
-    const result = await ment.save();
-    if (result) 
-      return res.status(201).json({ message: "mentor created" });
+    const mentor = await Mentor.signup(req.body)
+    const user = await User.signup(req.body)
+
+    res.status(200).json({ message: "mentor created" });
+
   } catch (error) {
-    return res.send(error);
+    res.status(400).json({error : err.message})
   }
 };
 

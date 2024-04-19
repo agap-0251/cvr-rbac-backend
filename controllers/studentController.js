@@ -1,6 +1,5 @@
-const express = require("express");
 const Student = require("../models/StudentModel");
-const router = express.Router();
+const User = require("../models/UserModel");
 
 //get all students
 const getAllStudents = async (req, res) => {
@@ -38,14 +37,14 @@ const getStudent = async (req, res) => {
 //create new student
 const addNewStudent = async (req, res) => {
   try {
-    let result = await Student.create(req.body);
-    let student = await result.save()
-    if (!student) {
-      return res.status(400).send("Creating student failed");
-    }
+    
+    const student = await Student.signup(req.body)
+    const user = await User.signup(req.body)
+
     res.status(200).json({ message: "Student created" });
+   
   } catch (err) {
-    res.send(err);
+    res.status(400).json({error : err.message})
   }
 };
 
